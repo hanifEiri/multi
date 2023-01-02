@@ -1,0 +1,155 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "multi": {
+      "projectType": "library",
+      "root": "projects/multi",
+      "sourceRoot": "projects/multi/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/multi/tsconfig.lib.json",
+            "project": "projects/multi/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/multi/src/test.ts",
+            "tsConfig": "projects/multi/tsconfig.spec.json",
+            "karmaConfig": "projects/multi/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/multi/tsconfig.lib.json",
+              "projects/multi/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "multiTest": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/multiTest",
+      "sourceRoot": "projects/multiTest/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/multiTest",
+            "index": "projects/multiTest/src/index.html",
+            "main": "projects/multiTest/src/main.ts",
+            "polyfills": "projects/multiTest/src/polyfills.ts",
+            "tsConfig": "projects/multiTest/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "projects/multiTest/src/favicon.ico",
+              "projects/multiTest/src/assets"
+            ],
+            "styles": [
+              "projects/multiTest/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/multiTest/src/environments/environment.ts",
+                  "with": "projects/multiTest/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "multiTest:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "multiTest:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "multiTest:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/multiTest/src/test.ts",
+            "polyfills": "projects/multiTest/src/polyfills.ts",
+            "tsConfig": "projects/multiTest/tsconfig.spec.json",
+            "karmaConfig": "projects/multiTest/karma.conf.js",
+            "assets": [
+              "projects/multiTest/src/favicon.ico",
+              "projects/multiTest/src/assets"
+            ],
+            "styles": [
+              "projects/multiTest/src/styles.css"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/multiTest/tsconfig.app.json",
+              "projects/multiTest/tsconfig.spec.json",
+              "projects/multiTest/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/multiTest/e2e/protractor.conf.js",
+            "devServerTarget": "multiTest:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "multiTest:serve:production"
+            }
+          }
+        }
+      }
+    }},
+  "defaultProject": "multi"
+}
